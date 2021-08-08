@@ -1,35 +1,43 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import Header from './components/ui/Header'
 import CharacterGrid from './components/characters/CharacterGrid'
 import Filter from './components/ui/Filter'
 import { Pagination } from '@material-ui/lab';
+import {getAllCharacters, filterCharacters} from './api'
+
 import './App.css';
 
 const App = () => {
 
   const [result, setResult] = useState({}); 
   const [isLoading, setIsLoading] = useState(true); 
-  const [filterOptions, setFilterOptions] = useState();
+  const [filterOptions, setFilterOptions] = useState({
+    gender: '',
+    status: '',
+    page: 1
+  });
   
+  const callGetAllCharacters = async () => {    
+    setIsLoading(true);
+    const allCharacters = await getAllCharacters();
+    setResult(allCharacters);
+    setIsLoading(false);
+  }
+
+  const callfilterCharacters = async () => {
+    setIsLoading(true);
+    const filteredCharacters = await filterCharacters(filterOptions);
+    setResult(filteredCharacters);
+    setIsLoading(false);
+  }
+
   useEffect(() => {
-    const genderFilter = filterOptions?.gender ?? '';
-    const statusFilter = filterOptions?.status ?? '';
-    const pageFilter = filterOptions?.page ?? '';
-    const url = `https://rickandmortyapi.com/api/character/?gender=${genderFilter}&status=${statusFilter}&page=${pageFilter}`;
+    callGetAllCharacters();
+  }, [])
 
-    const fetchItems = async () => {
-      const apiResult = await axios(url);
-
-      setResult(apiResult);
-      setIsLoading(false);
-    }
-    
-    console.log(result);
-
-    fetchItems();
+  useEffect(() => {
+    filterOptions && callfilterCharacters();
   }, [filterOptions])
-
 
   const handlePageChange = (e, value) => {
     setFilterOptions({
