@@ -56,6 +56,6 @@ describe('Util Tests', () => {
         const actualResult = createUrlQuery(filters);
 
         //assert
-        expect(actualResult.charAt(0) === '?').toEqual(true);
+        expect(actualResult.charAt(0)).toEqual('?');
     }) 
 })
