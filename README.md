@@ -4,11 +4,24 @@
 
 - A React App that gets data from public https://rickandmortyapi.com/ api. All characters listed when page is rendered. Users can filter characters through by gender and status.
 
-![](./screenshots/ss-project.png)
+![](./screenshots/ss1.png)
+![](./screenshots/ss2.png)
 
 To run the project:
+
+First:
+
+```bash
+npm install
+```
+Then:
 
 ```bash
 npm start
 ```
 Project will run on [http://localhost:3000](http://localhost:3000).
+
+To test the project:
+```bash
+npm test
+```
